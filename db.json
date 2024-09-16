@@ -1,0 +1,33 @@
+{
+  "personal": [
+    {
+      "id": "8ef0",
+      "firstName": "Haroon",
+      "lastName": "Khan",
+      "email": "haroon123@gmail.com",
+      "phoneNumber": "0212131313131",
+      "address": "Railway Road",
+      "zipCode": "63100",
+      "city": "Bahawalpur"
+    }
+  ],
+  "experience": [
+    {
+      "id": "3e58",
+      "companyName": "Enigmatix",
+      "title": "Front End Developer",
+      "years": "2",
+      "description": "I worked as Full Stack developer in Enigmatix"
+    }
+  ],
+  "education": [
+    {
+      "id": "13ce",
+      "degree": "BS-CS",
+      "school": "Islamia Universty Bahawlpur",
+      "city": "Bahawalpur",
+      "description": "Working as Full Stack Developer",
+      "skills": "HTML, CSS, JS , REACT, PYTHON"
+    }
+  ]
+}
