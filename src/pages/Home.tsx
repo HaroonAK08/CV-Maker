@@ -1,87 +1,74 @@
-
-import Header from '../components/Header/Header';
-import styled from 'styled-components';
-import cvImage from '../assets/cv.jpg'
-import { useNavigate } from 'react-router';
-
-
+import Header from "../components/Header/Header";
+import styled from "styled-components";
+import { useNavigate } from "react-router";
+import imgg from '../assets/hero.gif'
 
 const Home = () => {
-    const navigate = useNavigate();
-    const handleCV = () =>{
-        navigate('./personal')
-
-    }
+  const navigate = useNavigate();
+  const handleCV = () => {
+    navigate("./personal");
+  };
   return (
     <AppContainer>
       <Header />
-      <ContentSection>
-        <Image 
-          src= {cvImage} 
-          alt="Placeholder"
-        />
-        <TextContainer>
-          <Title>CV Builder</Title>
-          <Paragraph>
-  Your career starts here! Build a stunning CV with ease and stand out in the job market.
-  Tailor your resume to showcase your unique skills, experience, and achievements.
-  Let your CV reflect your personal brand – polished, professional, and ready to impress.
-  Start today and create a CV that captures the attention of recruiters in seconds!
-</Paragraph>
+      <Hero>
+        <Small>ONLINE CV MAKER</Small>
+        <Title>
+          Make an impressive CV <br /> in minutes.
+        </Title>
+        <Middle>
+          You don’t need to spend hours writing the perfect CV. Create one in 5
+          minutes or less and start
+          <br /> getting more interviews with our CV builder tool.
+        </Middle>
+        <Btn>
+          <button title="Build CV" onClick={handleCV}>
+            Build CV Now
+          </button>
+        </Btn>
+      </Hero>
+      <PicDiv>
 
-  <Btn>
-
-            <button title='Create CV' onClick={handleCV} >Create CV</button>
-  </Btn>
-        </TextContainer>
-      </ContentSection>
+      <Pic src={imgg} alt="Image" />
+      </PicDiv>
     </AppContainer>
   );
 };
 
 export default Home;
 const AppContainer = styled.div`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f7fc;
   min-height: 100vh;
 `;
-
-const ContentSection = styled.section`
+const Hero = styled.div`
+  // background: red;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
-  padding: 50px;
-  max-width: 1200px;
-  margin: 50px auto;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
-const Image = styled.img`
-  width: 50%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+const Small = styled.p`
+  font-size: 16px;
+  color: grey;
+  margin-top: 30px;
 `;
-
-const TextContainer = styled.div`
-  width: 40%;
-  text-align: left;
-  padding-left: 20px;
-`;
-
-const Title = styled.h2`
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+const Title = styled.h1`
+  font-size: 4rem;
   color: #333;
+  font-weight: 900;
+  margin-top: -10px;
+  text-align: center;
 `;
 
-const Paragraph = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #555;
-`;
+const Middle = styled.h2`
+  font-size: 1rem;
+  font-weight: 400;
+  color: grey;
+  text-align: center;
+  line-height: 20px; 
+  `;
+
 const Btn = styled.div`
   button {
     padding: 15px 30px;
@@ -102,7 +89,7 @@ const Btn = styled.div`
   }
 
   button:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -127,4 +114,16 @@ const Btn = styled.div`
     width: 100%;
     transform: translate(0, 0);
   }
+`;
+const PicDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 40px;
+`
+const Pic = styled.img`
+  /* Add your styles here */
+  width: 70%;
+  height: auto;
+  border-radius: 10px
 `;

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import React from 'react';
 import styled from "styled-components";
-// import axios from "axios";
 import { useState } from "react";
 import { postExperienceDetails } from "../../api/api";
+import { notification } from "antd"; 
 
 const ExperienceForm = () => {
   const [experienceData, setExperienceData] = useState({
@@ -21,13 +20,20 @@ const ExperienceForm = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // Call the API to save the personal details
+    // Call the API to save the experience details
     postExperienceDetails(experienceData)
       .then(() => {
-        alert("Details saved successfully!");
+        notification.success({
+          message: 'Success',
+          description: 'Experience details saved successfully!',
+        });
       })
       .catch((error) => {
-        console.error("Error saving data:", error);
+        notification.error({
+          message: 'Error',
+          description: 'An error occurred while saving your experience details.',
+        });
+        console.error('Error saving data:', error);
       });
   };
 
@@ -68,7 +74,6 @@ const ExperienceForm = () => {
                   value={experienceData.years}
                   onChange={handleChange}
                   placeholder="Enter your years of experience"
-                  required
                 />
               </Label>
               <Label>
@@ -120,7 +125,6 @@ const Form = styled.form`
 
 const Section = styled.div`
   margin-bottom: 20px;
-  // padding-left: 20px
 `;
 
 const Label = styled.label`
@@ -164,6 +168,7 @@ const SubmitButton = styled.button`
     box-shadow: 0 8px 20px rgba(37, 117, 252, 0.3);
   }
 `;
+
 const Title = styled.h1`
   font-size: 2.5rem;
   color: #5c62d3;

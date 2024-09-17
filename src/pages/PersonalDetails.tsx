@@ -6,18 +6,19 @@ import ExperienceForm from '../components/Form/ExperienceForm';
 import StateManager from '../State/StateManager';
 import EducationForm from '../components/Form/EducationForm';
 import Template from '../components/Form/Template';
-import Generate from '../components/Form/Generate';
+// import Generate from '../components/Form/Generate';
+// import Skills from '../components/Form/SkillsForm'
+import SkillsForm from '../components/Form/SkillsForm';
 
 const PersonalDetails = () => {
-  const { currentStep, handleNext, handleBack } = StateManager(1);
-  
+  const { currentStep, handleNext, handleBack, setStep } = StateManager(1);
 
   const statuses = {
     personal: currentStep === 1 ? 'process' : 'wait',
-    experiences: currentStep === 2 ? 'process' : 'wait',
-    education: currentStep === 3 ? 'process' : 'wait',
-    template: currentStep === 4 ? 'process' : 'wait',
-    done: currentStep === 5 ? 'process' : 'wait',
+    education: currentStep === 2 ? 'process' : 'wait',
+    skills: currentStep === 3 ? 'process' : 'wait',
+    experiences: currentStep === 4 ? 'process' : 'wait',
+    template: currentStep === 5 ? 'process' : 'wait',
   };
 
   const renderForm = () => {
@@ -25,13 +26,13 @@ const PersonalDetails = () => {
       case 1:
         return <PersonalDetailsForm />;
       case 2:
-        return <ExperienceForm />;
+        return <EducationForm />;
       case 3:
-        return <EducationForm />
+        return <SkillsForm />;
       case 4:
-        return <Template />
+        return <ExperienceForm />;
       case 5:
-        return <Generate />
+        return <Template />;
       default:
         return <PersonalDetailsForm />;
     }
@@ -41,7 +42,7 @@ const PersonalDetails = () => {
     <Main>
       <Header />
       <Content>
-        <Slide statuses={statuses} />
+        <Slide statuses={statuses} setStep={setStep} />
         {renderForm()}
         <ButtonContainer>
           <Button onClick={handleBack} disabled={currentStep === 1}>
@@ -57,8 +58,6 @@ const PersonalDetails = () => {
 };
 
 export default PersonalDetails;
-
-
 
 const Main = styled.div`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -79,7 +78,6 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 
 const ButtonContainer = styled.div`
   display: flex;

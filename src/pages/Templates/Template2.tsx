@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { getPersonalInfo, getEducationInfo, getExperienceInfo } from "../../api/api";
+import { getPersonalInfo, getEducationInfo, getExperienceInfo, getSkillsInfo } from "../../api/api";
 import styled from "styled-components";
 import profileImage from '../../assets/dp.jpeg';  // Adjust path if necessary
 
@@ -8,11 +8,13 @@ const Template2 = () => {
   const [userData, setUserData] = useState([]);
   const [educationData, setEducationData] = useState([]);
   const [experienceData, setExperienceData] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
 
   useEffect(() => {
     getPersonalInfo()?.then((res) => setUserData(res.data));
     getEducationInfo()?.then((res) => setEducationData(res.data));
     getExperienceInfo()?.then((res) => setExperienceData(res.data));
+    getSkillsInfo()?.then((res) => setSkillsData(res.data));
   }, []);
 
   const handlePrint = () => {
@@ -37,6 +39,7 @@ const Template2 = () => {
             <p><strong>Email:</strong> {data.email}</p>
             <p><strong>Phone:</strong> {data.phoneNumber}</p>
             <p><strong>Address:</strong> {data.address}, {data.city}</p>
+            <p><strong>Hobbies:</strong>{data.hobbies}</p>
           </Contact>
         ))}
       </Section>
@@ -68,9 +71,13 @@ const Template2 = () => {
 
         <Section>
           <SectionHeader>Skills</SectionHeader>
-          {educationData?.map((data: any) => (
-            <InfoBlock key={data.degree}>
-              <p><strong>Skills:</strong> {data.skills}</p>
+          {skillsData?.map((data: any) => (
+            <InfoBlock key={data.skill1}>
+              <h1>{data.skill1}</h1>
+              <h1>{data.skill2}</h1>
+              <h1>{data.skill3}</h1>
+              <h1>{data.skill4}</h1>
+
             </InfoBlock>
           ))}
         </Section>

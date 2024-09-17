@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { getPersonalInfo, getEducationInfo, getExperienceInfo } from "../../api/api";
+import { getPersonalInfo, getEducationInfo, getExperienceInfo, getSkillsInfo } from "../../api/api";
 import styled from "styled-components";
 import profileImage from '../../assets/dp.jpeg';
 
@@ -8,11 +8,13 @@ const Template4 = () => {
   const [userData, setUserData] = useState([]);
   const [educationData, setEducationData] = useState([]);
   const [experienceData, setExperienceData] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
 
   useEffect(() => {
     getPersonalInfo()?.then((res) => setUserData(res.data));
     getEducationInfo()?.then((res) => setEducationData(res.data));
     getExperienceInfo()?.then((res) => setExperienceData(res.data));
+    getSkillsInfo()?.then((res) => setSkillsData(res.data))
   }, []);
 
   const handlePrint = () => {
@@ -29,6 +31,7 @@ const Template4 = () => {
             <Info><strong>Email:</strong> {data.email}</Info>
             <Info><strong>Phone:</strong> {data.phoneNumber}</Info>
             <Info><strong>City:</strong> {data.city}</Info>
+            <Info><strong>Hobbies:</strong>{data.hobbies}</Info>
           </ProfileDetails>
         ))}
       </ProfileCard>
@@ -36,16 +39,20 @@ const Template4 = () => {
       <CardContainer>
         <Card>
           <CardTitle>Skills</CardTitle>
-          {educationData?.map((data: any) => (
-            <SkillContainer key={data.companyName}>
-              {data.skills.split(',').map((skill: string, idx: number) => (
-                <SkillBar key={idx}>
-                  <SkillName>{skill}</SkillName>
+          {skillsData?.map((data: any) => (
+            <SkillContainer key={data.skill1}>
+              {/* {data.skills.split(',').map((skill: string, idx: number) => ( */}
+                {/* <SkillBar key={idx}> */}
+                  <SkillName>{data.skill1}</SkillName>
+                  <SkillName>{data.skill2}</SkillName>
+                  <SkillName>{data.skill3}</SkillName>
+                  <SkillName>{data.skill4}</SkillName>
+
                   <SkillProgress>
                     <Progress width={`${Math.random() * 100}%`} />
                   </SkillProgress>
-                </SkillBar>
-              ))}
+                {/* </SkillBar> */}
+              {/* ))} */}
             </SkillContainer>
           ))}
         </Card>
@@ -155,11 +162,11 @@ const SkillContainer = styled.div`
   gap: 10px;
 `;
 
-const SkillBar = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
+// const SkillBar = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+// `;
 
 const SkillName = styled.span`
   flex: 1;

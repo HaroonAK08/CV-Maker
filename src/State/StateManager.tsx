@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 const StateManager = (initialStep = 1) => {
   const [currentStep, setCurrentStep] = useState(initialStep);
@@ -11,10 +11,15 @@ const StateManager = (initialStep = 1) => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  const setStep = (step: SetStateAction<number>) => {
+    setCurrentStep(step);
+  };
+
   return {
     currentStep,
     handleNext,
     handleBack,
+    setStep,
   };
 };
 

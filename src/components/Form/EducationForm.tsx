@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import React from 'react';
 import { useState } from "react";
 import styled from "styled-components";
 import { postEducationDetails } from "../../api/api";
+import { notification } from "antd"; 
 
 const EducationForm = () => {
   const [educationData, setEducationData] = useState({
@@ -10,32 +10,38 @@ const EducationForm = () => {
     school: "",
     city: "",
     description: "",
-    skills:""
   });
 
-  const handleChange =(e: { target: { name: any; value: any; }; }) =>{
-    const { name ,value } = e.target;
-    setEducationData({ ...educationData, [name]: value})
-  }
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    setEducationData({ ...educationData, [name]: value });
+  };
 
-
-  const handleSumbit = (e: {preventDefault: () => void}) =>{
-    e.preventDefault()
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
 
     postEducationDetails(educationData)
-    .then(() =>{
-      alert("Details saved successfuly!");
-    })
-    .catch((error) =>{
-      console.error("Error saving data", error)
-    })
-  }
+      .then(() => {
+        notification.success({
+          message: 'Success',
+          description: 'Education details saved successfully!',
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: 'Error',
+          description: 'An error occurred while saving your education details.',
+        });
+        console.error('Error saving data:', error);
+      });
+  };
+
   return (
     <>
       <Title>Education Details</Title>
       <Container>
         <FormContainer>
-          <Form onSubmit={handleSumbit}>
+          <Form onSubmit={handleSubmit}>
             <Section>
               <Label>
                 Degree*
@@ -67,17 +73,6 @@ const EducationForm = () => {
                   value={educationData.city}
                   onChange={handleChange}
                   placeholder="Enter city name"
-                  required
-                />
-              </Label>
-              <Label>
-                Skills
-                <Input
-                  type="text"
-                  name="skills"
-                  value={educationData.skills}
-                  onChange={handleChange}
-                  placeholder="Enter your SKills"
                 />
               </Label>
               <Label>
@@ -129,7 +124,6 @@ const Form = styled.form`
 
 const Section = styled.div`
   margin-bottom: 20px;
-  // padding-left: 20px
 `;
 
 const Label = styled.label`
@@ -173,6 +167,7 @@ const SubmitButton = styled.button`
     box-shadow: 0 8px 20px rgba(37, 117, 252, 0.3);
   }
 `;
+
 const Title = styled.h1`
   font-size: 2.5rem;
   color: #5c62d3;

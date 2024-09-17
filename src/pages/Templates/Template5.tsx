@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { getPersonalInfo, getEducationInfo, getExperienceInfo } from "../../api/api";
+import {
+  getPersonalInfo,
+  getEducationInfo,
+  getExperienceInfo,
+  getSkillsInfo,
+} from "../../api/api";
 import styled from "styled-components";
-import profileImage from '../../assets/dp.jpeg';
+import profileImage from "../../assets/dp.jpeg";
 
 const Template5 = () => {
   const [userData, setUserData] = useState([]);
   const [educationData, setEducationData] = useState([]);
   const [experienceData, setExperienceData] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
 
   useEffect(() => {
     getPersonalInfo()?.then((res) => setUserData(res.data));
     getEducationInfo()?.then((res) => setEducationData(res.data));
     getExperienceInfo()?.then((res) => setExperienceData(res.data));
+    getSkillsInfo()?.then((res) => setSkillsData(res.data));
   }, []);
 
   const handlePrint = () => {
@@ -20,176 +27,232 @@ const Template5 = () => {
   };
 
   return (
-    <Container>
-      <Header>
-        <ProfileSection>
-          <ProfileImage src={profileImage} alt="Profile" />
-          {userData?.map((data: any) => (
-            <ProfileDetails key={data.email}>
-              <Name>{data.firstName} {data.lastName}</Name>
-              <Info><strong>Email:</strong> {data.email}</Info>
-              <Info><strong>Phone:</strong> {data.phoneNumber}</Info>
-              <Info><strong>City:</strong> {data.city}</Info>
-            </ProfileDetails>
-          ))}
-        </ProfileSection>
-      </Header>
+    <>
+      <Main>
+        <Left>
+          <Profile>
+            <ProfileImage src={profileImage} alt="Profile" />
+            {userData?.map((data: any) => (
+              <ProfileDetails key={data.email}>
+                <Name>
+                  {data.firstName} {data.lastName}
+                </Name>
+                <Info>
+                  <strong>Email:</strong> {data.email}
+                </Info>
+                <Info>
+                  <strong>Phone:</strong> {data.phoneNumber}
+                </Info>
+                <Info>
+                  <strong>City:</strong> {data.city}
+                </Info>
+                <Info>
+                  <strong>Hobbies:</strong> {data.hobbies}
+                </Info>
+              </ProfileDetails>
+            ))}
+          </Profile>
 
-      <Content>
-        <Section>
-          <SectionTitle>Skills</SectionTitle>
-          {educationData?.map((data: any) => (
-            <SkillItem key={data.companyName}>
-              <SkillName>{data.skills}</SkillName>
-            </SkillItem>
-          ))}
-        </Section>
+          <Section>
+            <SectionTitle>Education</SectionTitle>
+            {educationData?.map((data: any) => (
+              <EducationItem key={data.degree}>
+                <Info>
+                  <strong>Degree:</strong> {data.degree}
+                </Info>
+                <Info>
+                  <strong>Institute:</strong> {data.school}
+                </Info>
+                <Info>
+                  <strong>City:</strong> {data.city}
+                </Info>
+                <Info>
+                  <strong>Description:</strong> {data.description}
+                </Info>
+              </EducationItem>
+            ))}
+          </Section>
+        </Left>
 
-        <Section>
-          <SectionTitle>Education</SectionTitle>
-          {educationData?.map((data: any) => (
-            <EducationItem key={data.degree}>
-              <Info><strong>Degree:</strong> {data.degree}</Info>
-              <Info><strong>Institute:</strong> {data.school}</Info>
-              <Info><strong>City:</strong> {data.city}</Info>
-              <Info><strong>Description:</strong> {data.description}</Info>
-            </EducationItem>
-          ))}
-        </Section>
+        <Middle>
+          <Section>
+            <SectionTitle>Skills</SectionTitle>
+            {skillsData?.map((data: any) => (
+              <SkillItem key={data.skill1}>
+                <Skill>{data.skill1}</Skill>
+                <Skill>{data.skill2}</Skill>
+                <Skill>{data.skill3}</Skill>
+                <Skill>{data.skill4}</Skill>
+              </SkillItem>
+            ))}
+          </Section>
+        </Middle>
 
-        <Section>
-          <SectionTitle>Experience</SectionTitle>
-          {experienceData?.map((data: any) => (
-            <ExperienceItem key={data.companyName}>
-              <Info><strong>Company:</strong> {data.companyName}</Info>
-              <Info><strong>Role:</strong> {data.title}</Info>
-              <Info><strong>Years:</strong> {data.years}</Info>
-              <Info><strong>Description:</strong> {data.description}</Info>
-            </ExperienceItem>
-          ))}
-        </Section>
-      </Content>
-
+        <Right>
+          <Section>
+            <SectionTitle>Experience</SectionTitle>
+            {experienceData?.map((data: any) => (
+              <ExperienceItem key={data.companyName}>
+                <Info>
+                  <strong>Company:</strong> {data.companyName}
+                </Info>
+                <Info>
+                  <strong>Role:</strong> {data.title}
+                </Info>
+                <Info>
+                  <strong>Years:</strong> {data.years}
+                </Info>
+                <Info>
+                  <strong>Description:</strong> {data.description}
+                </Info>
+              </ExperienceItem>
+            ))}
+          </Section>
+        </Right>
+      </Main>
       <PrintButton onClick={handlePrint}>Print CV</PrintButton>
-    </Container>
+    </>
   );
 };
 
 export default Template5;
 
 // Styled Components
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px;
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(to right, #f5f7fa, #c3cfe2);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-`;
-
-const Header = styled.div`
+const Main = styled.div`
   display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  width: 70%;
+  max-width: 1200px; /* Optional: Set a max-width for larger screens */
+  @media print {
+    width: 100%;
+  }
+`;
+const Left = styled.div`
+  flex: 3;
+  background: #87a922;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  // margin-right: 10px;
+  color: #f7f6bb;
+  width: 90%;
 `;
 
-const ProfileSection = styled.div`
+const Right = styled.div`
+  flex: 1;
+  background: #fcdc2a;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 90%;
+`;
+
+const Middle = styled.div`
+  flex: 2;
+  width: 90%;
+  background: #114232;
+  padding: 20px;
+  color: #f7f6bb;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Profile = styled.div`
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
-  width: 100%;
+  margin-bottom: 20px;
 `;
 
 const ProfileImage = styled.img`
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  border: 6px solid #3498db;
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
   margin-right: 20px;
+  border: 5px solid #ffffff;
 `;
 
 const ProfileDetails = styled.div`
-  flex-grow: 1;
+  flex: 1;
 `;
 
 const Name = styled.h1`
-  font-size: 30px;
-  color: #3498db;
+  font-size: 32px;
+  color: #f7f6bb;
   margin-bottom: 10px;
 `;
 
 const Info = styled.p`
-  margin: 5px 0;
   font-size: 16px;
-  color: #2c3e50;
+  color: maroon;
+  margin: 5px 0;
 
   strong {
-    color: #3498db;
+    color: black;
+    font-weight: bold;
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`;
-
 const Section = styled.section`
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 22px;
-  color: #3498db;
+  font-size: 24px;
+  color: #ffffff;
   margin-bottom: 15px;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #ffffff;
   padding-bottom: 10px;
 `;
 
 const SkillItem = styled.div`
-  background: #3498db;
-  color: #ffffff;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 `;
 
-const SkillName = styled.span`
-  font-size: 16px;
+const Skill = styled.div`
+  background: #f7f6bb;
+  color: black;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  flex: 1 1 45%;
 `;
 
 const EducationItem = styled.div`
-  margin-bottom: 20px;
-  background-color: #f5f7fa;
-  padding: 15px;
-  border-radius: 8px;
+  background: #ffffff;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const ExperienceItem = styled.div`
-  margin-bottom: 20px;
-  background-color: #f5f7fa;
-  padding: 15px;
-  border-radius: 8px;
+  background: #ffffff;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const PrintButton = styled.button`
   display: block;
-  margin: 40px auto 0;
-  padding: 12px 30px;
+  margin: 20px auto;
+  padding: 10px 20px;
   background-color: #3498db;
-  color: white;
+  color: #ffffff;
   font-size: 16px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #2980b9;

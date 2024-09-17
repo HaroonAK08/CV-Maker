@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { getPersonalInfo, getEducationInfo, getExperienceInfo } from "../../api/api";
+import {
+  getPersonalInfo,
+  getEducationInfo,
+  getExperienceInfo,
+  getSkillsInfo,
+} from "../../api/api";
 import styled from "styled-components";
-import profileImage from '../../assets/dp.jpeg';  // Adjust path if necessary
+import profileImage from "../../assets/dp.jpeg"; // Adjust path if necessary
 
 const ModernTemplate = () => {
   const [userData, setUserData] = useState([]);
   const [educationData, setEducationData] = useState([]);
   const [experienceData, setExperienceData] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
 
   useEffect(() => {
     getPersonalInfo()?.then((res) => setUserData(res.data));
     getEducationInfo()?.then((res) => setEducationData(res.data));
     getExperienceInfo()?.then((res) => setExperienceData(res.data));
+    getSkillsInfo()?.then((res) => setSkillsData(res.data));
   }, []);
 
   const handlePrint = () => {
@@ -26,25 +33,27 @@ const ModernTemplate = () => {
           <ProfileImg src={profileImage} alt="Profile Photo" />
           {userData?.map((data: any) => (
             <PersonalInfo key={data.email}>
-              <Name>{data.firstName} {data.lastName}</Name>
-              <p><strong>Email:</strong> {data.email}</p>
-              <p><strong>Phone:</strong> {data.phoneNumber}</p>
-              <p><strong>Address:</strong> {data.address}</p>
-              <p><strong>City:</strong> {data.city}</p>
+              <Name style={{fontSize:"30px",paddingBottom:"30px"}}>
+                {data.firstName} {data.lastName}
+              </Name>
+              <p>
+                <strong>Email:</strong> {data.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {data.phoneNumber}
+              </p>
+              <p>
+                <strong>Address:</strong> {data.address}
+              </p>
+              <p>
+                <strong>City:</strong> {data.city}
+              </p>
+              <p>
+                <strong>Hobbies:</strong>{data.hobbies}
+              </p>
             </PersonalInfo>
           ))}
         </ProfileCard>
-
-        <Section>
-          <SectionTitle>Skills</SectionTitle>
-          {educationData?.map((data: any) => (
-            <SkillBlock key={data.companyName}>
-              {data.skills.split(',').map((skill: string, idx: number) => (
-                <SkillTag key={idx}>{skill}</SkillTag>
-              ))}
-            </SkillBlock>
-          ))}
-        </Section>
       </LeftSection>
 
       <RightSection>
@@ -52,10 +61,18 @@ const ModernTemplate = () => {
           <SectionTitle>Education</SectionTitle>
           {educationData?.map((data: any) => (
             <InfoCard key={data.degree}>
-              <p><strong>Degree:</strong> {data.degree}</p>
-              <p><strong>Institute:</strong> {data.school}</p>
-              <p><strong>City:</strong> {data.city}</p>
-              <p><strong>Description:</strong> {data.description}</p>
+              <p>
+                <strong>Degree:</strong> {data.degree}
+              </p>
+              <p>
+                <strong>Institute:</strong> {data.school}
+              </p>
+              <p>
+                <strong>City:</strong> {data.city}
+              </p>
+              <p>
+                <strong>Description:</strong> {data.description}
+              </p>
             </InfoCard>
           ))}
         </Section>
@@ -64,10 +81,37 @@ const ModernTemplate = () => {
           <SectionTitle>Experience</SectionTitle>
           {experienceData?.map((data: any) => (
             <InfoCard key={data.companyName}>
-              <p><strong>Company:</strong> {data.companyName}</p>
-              <p><strong>Role:</strong> {data.title}</p>
-              <p><strong>Years:</strong> {data.years}</p>
-              <p><strong>Description:</strong> {data.description}</p>
+              <p>
+                <strong>Company:</strong> {data.companyName}
+              </p>
+              <p>
+                <strong>Role:</strong> {data.title}
+              </p>
+              <p>
+                <strong>Years:</strong> {data.years}
+              </p>
+              <p>
+                <strong>Description:</strong> {data.description}
+              </p>
+            </InfoCard>
+          ))}
+        </Section>
+        <Section>
+          <SectionTitle>Skills</SectionTitle>
+          {skillsData?.map((data: any) => (
+            <InfoCard key={data.skill1}>
+              <p>
+                <strong>Skill 1:</strong> {data.skill1}
+              </p>
+              <p>
+                <strong>Skill 2:</strong> {data.skill2}
+              </p>
+              <p>
+                <strong>Skill 3:</strong> {data.skill3}
+              </p>
+              <p>
+                <strong>Skill 4:</strong> {data.skill4}
+              </p>
             </InfoCard>
           ))}
         </Section>
@@ -86,13 +130,13 @@ const NewMain = styled.div`
   justify-content: space-between;
   background-color: #fafafa;
   color: #2c3e50;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 40px;
   max-width: 1000px;
   margin: 0 auto;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  height: 100%
+  height: 100%;
 `;
 
 const LeftSection = styled.div`
@@ -101,6 +145,7 @@ const LeftSection = styled.div`
   background: #34495e;
   color: white;
   border-radius: 15px;
+  line-height: 40px;
 `;
 
 const RightSection = styled.div`
@@ -125,12 +170,23 @@ const ProfileImg = styled.img`
 
 const PersonalInfo = styled.div`
   margin-top: 15px;
-  font-size: 14px;
+  font-size: 18px;
+    text-align: left;
+
 
   p {
     margin: 5px 0;
     strong {
       color: #1abc9c;
+    }
+  }
+
+  @media print {
+    font-size: 14px; 
+    
+    p {
+      margin: 4px 0; 
+      
     }
   }
 `;
@@ -160,19 +216,6 @@ const InfoCard = styled.div`
   }
 `;
 
-const SkillBlock = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`;
-
-const SkillTag = styled.span`
-  background: #1abc9c;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-`;
 
 const PrintButton = styled.button`
   display: block;
@@ -184,7 +227,7 @@ const PrintButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  
+
   &:hover {
     background-color: #16a085;
   }

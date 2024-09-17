@@ -21,5 +21,11 @@ export interface EducationDetailsTypes {
   school: any;
   city: any;
   description: any;
-  skills: any;
+}
+
+export interface SkillsDetailsTypes {
+  skill1: any;
+  skill2: any;
+  skill3: any;
+  skill4: any;
 }

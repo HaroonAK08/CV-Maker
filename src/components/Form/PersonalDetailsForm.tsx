@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {postPersonalDetails} from '../../api/api'
+import { postPersonalDetails } from '../../api/api';
 import { useState } from 'react';
 import styled from 'styled-components';
 import ImageUploader from '../Personal/ImageUploader';
+import { notification } from 'antd'; // Import notification
 
 const PersonalDetailsForm = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const PersonalDetailsForm = () => {
 
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
 
-  const handleChange = (e: {target: { name: any; value: any; }}) => {
+  const handleChange = (e: { target: { name: any; value: any; } }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -28,9 +29,16 @@ const PersonalDetailsForm = () => {
     // Call the API to save the personal details
     postPersonalDetails(formData)
       .then(() => {
-        alert('Details saved successfully!');
+        notification.success({
+          message: 'Success',
+          description: 'Your personal details have been saved successfully!',
+        });
       })
       .catch((error) => {
+        notification.error({
+          message: 'Error',
+          description: 'An error occurred while saving your personal details.',
+        });
         console.error('Error saving data:', error);
       });
   };
@@ -324,6 +332,7 @@ const SubmitButton = styled.button`
     box-shadow: 0 8px 20px rgba(37, 117, 252, 0.3);
   }
 `;
+
 const Title = styled.h1`
   font-size: 2.5rem;
   color: #5C62D3;
@@ -331,7 +340,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-align: center;
   position: relative;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -343,7 +352,7 @@ const Title = styled.h1`
     border-radius: 5px;
     transform: translateX(-50%);
   }
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }

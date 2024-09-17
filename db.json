@@ -1,33 +1,41 @@
 {
   "personal": [
     {
-      "id": "8ef0",
+      "id": "7753",
       "firstName": "Haroon",
       "lastName": "Khan",
       "email": "haroon123@gmail.com",
-      "phoneNumber": "0212131313131",
-      "address": "Railway Road",
-      "zipCode": "63100",
+      "phoneNumber": "03001234567",
+      "address": "House# 276, DHA BWP",
+      "hobbies": "Cricket",
       "city": "Bahawalpur"
     }
   ],
   "experience": [
     {
-      "id": "3e58",
+      "id": "0f04",
       "companyName": "Enigmatix",
-      "title": "Front End Developer",
+      "title": "Frontend Developer",
       "years": "2",
-      "description": "I worked as Full Stack developer in Enigmatix"
+      "description": "Worked as Frontend Developer"
     }
   ],
   "education": [
     {
-      "id": "13ce",
+      "id": "e3ab",
       "degree": "BS-CS",
-      "school": "Islamia Universty Bahawlpur",
+      "school": "Islamia Universty Bahawalpur",
       "city": "Bahawalpur",
-      "description": "Working as Full Stack Developer",
-      "skills": "HTML, CSS, JS , REACT, PYTHON"
+      "description": "I have done with 4 GPA"
+    }
+  ],
+  "skills": [
+    {
+      "id": "4f21",
+      "skill1": "Web Frontend Development [HTML,CSS,JS,REACT]",
+      "skill2": "App Frontend Development ",
+      "skill3": "Python",
+      "skill4": "Swimming"
     }
   ]
 }

@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderTitle>MasterCV</HeaderTitle>
-      <HeaderSubtitle>The Place Where CVs Come to Life – Ready for Success?</HeaderSubtitle>
+      {/* <HeaderSubtitle>The Place Where CVs Come to Life – Ready for Success?</HeaderSubtitle> */}
     </HeaderContainer>
   );
 };
@@ -22,13 +22,19 @@ const HeaderContainer = styled.header`
 
 const HeaderTitle = styled.h1`
   margin: 0;
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700; 
   letter-spacing: 1.5px;
+  line-height: 1.2; 
+  text-transform: uppercase; 
+  color: white; 
+  font-family: 'Roboto', sans-serif; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
 `;
 
-const HeaderSubtitle = styled.p`
-  margin: 5px 0 0;
-  font-size: 1.2rem;
-  opacity: 0.8;
-`;
+
+// const HeaderSubtitle = styled.p`
+//   margin: 5px 0 0;
+//   font-size: 1.2rem;
+//   opacity: 0.8;
+// `;
